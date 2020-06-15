@@ -6,6 +6,7 @@ const userRoute = require('./routes/user');
 const companyRoute = require('./routes/company');
 const tradeRoute = require('./routes/trade');
 const balanceRoute = require('./routes/balance');
+const portfolioRoute = require('./routes/portfolio');
 const auth = require('./auth');
 
 const dotenv = require('dotenv').config();
@@ -34,6 +35,7 @@ app.use('/companies', companyRoute);
 app.use(auth.verifyUser);
 app.use('/trades', tradeRoute);
 app.use('/balance', balanceRoute);
+app.use('/portfolio', portfolioRoute);
 
 
 

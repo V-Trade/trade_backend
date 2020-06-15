@@ -28,6 +28,7 @@ router.route('/')
     });
 
 
+//this shows all the trading history of a user
 router.route('/:uid')
     .get(auth.verifyUser, (req, res, next) => {
         Trade.find({ trader: req.params.uid })
@@ -40,4 +41,16 @@ router.route('/:uid')
         res.json({ message: "Method not supported" });
     });
 
+//this shows the portfolio of a user
+router.route('/:uid/portfolio')
+    .get(auth.verifyUser, (req, res, next) => {
+        Trade.find({ trader: req.params.uid })
+            .then((portfolio) => {
+                res.json(portfolio);
+            }).catch(next);
+    })
+    .post((req, res) => {
+        res.statusCode = 405;
+        res.json({ message: "Method not supported" });
+    });
 module.exports = router;

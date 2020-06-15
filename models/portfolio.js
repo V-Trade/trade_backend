@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 
 const portfolioSchema = new mongoose.Schema({
-    companyName: {
-        type: String
+    company: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Company'
     },
     shareBalance: {
         type: Number
@@ -15,6 +16,10 @@ const portfolioSchema = new mongoose.Schema({
     },
     currentPrice: {
         type: Number
+    },
+    acHolder: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 }, { timestamps: true });
 
