@@ -16,6 +16,9 @@ const companySchema = new mongoose.Schema({
     sharePrice: {
         type: Number
     },
+    lastPrice: {
+        type: Number
+    },
     eps: {
         type: Number
     },
