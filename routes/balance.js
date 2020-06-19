@@ -30,7 +30,7 @@ router.route('/')
 
 router.route('/:uid')
     .get(auth.verifyUser, (req, res, next) => {
-        Balance.find({ acHolder: req.params.uid })
+        Balance.findOne({ acHolder: req.params.uid })
             .then((balance) => {
                 res.json(balance);
             }).catch(next);
@@ -38,6 +38,12 @@ router.route('/:uid')
     .post((req, res) => {
         res.statusCode = 405;
         res.json({ message: "Method not supported" });
+    })
+    .put(auth.verifyUser, (req, res, next) => {
+        Balance.findOneAndUpdate({ _id: req.params.id }, { $set: req.body }, { new: true })
+            .then((response) => {
+                res.json(response);
+            }).catch(next);
     });
 
 module.exports = router;

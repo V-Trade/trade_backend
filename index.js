@@ -10,8 +10,8 @@ const portfolioRoute = require('./routes/portfolio');
 const auth = require('./auth');
 
 const dotenv = require('dotenv').config();
+const axios = require('axios');
 const app = express();
-
 
 app.use(morgan('tiny'));
 app.use(express.json());
@@ -29,7 +29,14 @@ mongoose.connect(process.env.URL, {
     }, (err) => console.log(err));
 
 
+app.get('/liveMarket', (req, res, next) => {
+    axios.get('https://nepse-data-api.herokuapp.com/data/todaysprice')
+        .then((response) => {
+            return ({
 
+            })
+        })
+})
 app.use('/users', userRoute);
 app.use('/companies', companyRoute);
 app.use(auth.verifyUser);
