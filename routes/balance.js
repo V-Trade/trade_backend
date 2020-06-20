@@ -40,7 +40,7 @@ router.route('/:uid')
         res.json({ message: "Method not supported" });
     })
     .put(auth.verifyUser, (req, res, next) => {
-        Balance.findOneAndUpdate({ _id: req.params.id }, { $set: req.body }, { new: true })
+        Balance.findOneAndUpdate({ acHolder: req.params.uid }, { $set: req.body }, { new: true })
             .then((response) => {
                 res.json(response);
             }).catch(next);
