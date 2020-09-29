@@ -1,11 +1,15 @@
 const express = require('express');
 const Balance = require('../models/balance');
 const auth = require('../auth');
+const User = require('../models/user');
 const router = express.Router();
 
 router.route('/')
-    .get(auth.verifyUser, auth.verifyAdmin, (req, res, next) => {
+    .get(auth.verifyUser, (req, res, next) => {
         Balance.find({})
+            .populate({
+                path: 'acHolder'
+            })
             .then((balances) => {
                 res.json(balances);
             }).catch(next);
@@ -31,6 +35,9 @@ router.route('/')
 router.route('/:uid')
     .get(auth.verifyUser, (req, res, next) => {
         Balance.findOne({ acHolder: req.params.uid })
+            .populate({
+                path: 'acHolder'
+            })
             .then((balance) => {
                 res.json(balance);
             }).catch(next);
@@ -46,4 +53,12 @@ router.route('/:uid')
             }).catch(next);
     });
 
+
+// router.route('leaderboard')
+//     .get(auth.verifyUser, (req, res, next) => {
+//         Balance.find({})
+//             .then((response) => {
+//                 res.json(response);
+//             })
+//     })
 module.exports = router;

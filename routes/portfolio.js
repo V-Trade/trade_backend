@@ -6,6 +6,9 @@ const router = express.Router();
 router.route('/')
     .get(auth.verifyUser, auth.verifyAdmin, (req, res, next) => {
         Portfolio.find({})
+            .populate({
+                path: 'company'
+            })
             .then((portfolio) => {
                 res.json(portfolio);
             }).catch(next);
@@ -31,6 +34,9 @@ router.route('/')
 router.route('/:uid')
     .get(auth.verifyUser, (req, res, next) => {
         Portfolio.find({ acHolder: req.params.uid })
+            .populate({
+                path: 'company'
+            })
             .then((portfolio) => {
                 res.json(portfolio);
             }).catch(next);
@@ -39,6 +45,9 @@ router.route('/:uid')
 router.route('/:uid/:cid')
     .get(auth.verifyUser, (req, res, next) => {
         Portfolio.findOne({ acHolder: req.params.uid, company: req.params.cid })
+            .populate({
+                path: 'company'
+            })
             .then((portfolio) => {
                 res.json(portfolio);
             }).catch(next);
